@@ -1,18 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Weapon : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private VisualEffect _vfx;
+    private bool _vfxPlaying = false;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKey(KeyCode.Y) && !_vfxPlaying)
+        {
+            _vfx.Play();
+            _vfxPlaying = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Y))
+        {
+            _vfx.Stop();
+            _vfxPlaying = false;
+        }
     }
 }
