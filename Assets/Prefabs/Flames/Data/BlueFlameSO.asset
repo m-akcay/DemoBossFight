@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3faa5c1186e9b5f4990641cca97eea8d, type: 3}
+  m_Name: BlueFlameSO
+  m_EditorClassIdentifier: 
+  _name: BlueFlame
+  _ammoType: 1
+  _prefab: {fileID: 1923342226280422763, guid: 2da7feced64702443b1bf1b6ad92125e, type: 3}
+  _speed: 16
+  _maxDistance: 65
+  _onHitDamage: 20
+  _dot: 20
+  _dotLengthSeconds: 4
+  _vfxStartEventName: BlueFlame
+  _vfxStopEventName: StopFlames
