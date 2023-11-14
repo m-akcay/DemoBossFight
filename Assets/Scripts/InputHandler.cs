@@ -83,5 +83,9 @@ public class InputHandler : MonoBehaviour
         {
             _weaponManager.SelectWeapon(Weapon.AmmoType.FROST);
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            _weaponManager.SelectWeapon(Weapon.AmmoType.BULLET);
+        }
     }
 }

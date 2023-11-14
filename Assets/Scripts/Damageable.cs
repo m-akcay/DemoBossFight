@@ -11,14 +11,13 @@ public class Damageable : MonoBehaviour
         public AmmoType weaponType;
         public float multiplier;
     }
-
+    private const float DEFAULT_DEFENSE_REDUCTION = 0;
     [SerializeField] protected float _totalHp;
     [SerializeField] protected float _remainingHp;
     [SerializeField] protected Weakness[] _weaknesses;
-    [SerializeField] protected float _damageReduction = 0;
-    [SerializeField] protected float _damageReductionMultiplier = 1;
     protected Dictionary<AmmoType, float> _weaknessMap;
     protected Dictionary<AmmoType, float> _weaknessDotRemainingTimes;
+    protected MobDefenseReductionHandler _defenseReductionHandler;
 
     public Dictionary<AmmoType, float> WeaknessMap => _weaknessMap;
 
@@ -33,6 +32,7 @@ public class Damageable : MonoBehaviour
 
         _totalHp = SO.TotalHp;
         _remainingHp = _totalHp;
+        _defenseReductionHandler = GetComponent<MobDefenseReductionHandler>();
     }
 
     public virtual void ApplyDamage(in DamageSource damageSource)
@@ -44,12 +44,17 @@ public class Damageable : MonoBehaviour
         {
             ApplyDot(damageSource.Dot, damageSource.DotDurationSeconds, damageSource.Type);
         }
+
+        if (damageSource.HasDr)
+        {
+            _defenseReductionHandler.UpdateDefenseReduction(damageSource);
+        }
     }
 
     protected float CalculateDirectDamage(float onHitDamage, float weaknessMultiplier)
     {
         float damageAfterWeakness = onHitDamage * weaknessMultiplier;
-        float damageTaken = damageAfterWeakness * _damageReductionMultiplier;
+        float damageTaken = damageAfterWeakness * _defenseReductionHandler.DefenseReductionMultiplier;
         return damageTaken;
     }
 
@@ -70,17 +75,12 @@ public class Damageable : MonoBehaviour
         // TryGetValue saves 1 read to dict
         while (_weaknessDotRemainingTimes.TryGetValue(ammoType, out float remainingTime) && remainingTime > 0.0f)
         {
-            float damage = amount * _weaknessMap[ammoType] * _damageReductionMultiplier;
+            float damage = amount * _weaknessMap[ammoType] * _defenseReductionHandler.DefenseReductionMultiplier;
             _remainingHp -= damage;
             _weaknessDotRemainingTimes[ammoType] = remainingTime - 1;
             yield return new WaitForSeconds(1.0f);
         }
         _weaknessDotRemainingTimes.Remove(ammoType);
     }
-
-    public void UpdateDamageReduction(float value)
-    {
-        _damageReduction = value;
-        _damageReductionMultiplier = 1 - value;
-    }
+  
 }

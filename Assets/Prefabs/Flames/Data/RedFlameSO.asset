@@ -15,10 +15,17 @@ MonoBehaviour:
   _name: RedFlame
   _ammoType: 0
   _prefab: {fileID: 1923342226280422763, guid: 2da7feced64702443b1bf1b6ad92125e, type: 3}
+  _capsuleColor: {r: 1.4142135, g: 0.25511304, b: 0, a: 1}
   _speed: 16
-  _maxDistance: 30
+  _totalAmmo: 200
+  _ammoReductionAmount: 1
+  _shootingIcd: 0.1
+  _reloadIcd: 0.1
+  _maxDistance: 35
   _onHitDamage: 100
   _dot: 10
-  _dotLengthSeconds: 5
+  _dotDurationSeconds: 5
+  _defenseReduction: 0
+  _defenseReductionDuration: 0
   _vfxStartEventName: RedFlame
   _vfxStopEventName: StopFlames

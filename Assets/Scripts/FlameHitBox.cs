@@ -11,9 +11,11 @@ public class FlameHitBox : DamageSource
     [SerializeField] private float _maxDistance;
     [SerializeField] private float _scaleFactor;
 
-    public void Init(in Transform inTransform, in FlameSO flameSO)
+    public override void Init(in Transform inTransform, in AmmoSO ammoSO)
     {
-        base.Init(inTransform, flameSO);
+        base.Init(inTransform, ammoSO);
+        
+        var flameSO = ammoSO as FlameSO;
 
         var fwd = inTransform.forward;
         var pos = inTransform.position;
@@ -25,8 +27,6 @@ public class FlameHitBox : DamageSource
         _maxDistance = flameSO.MaxDistance;
         _displacement = speed * Time.deltaTime * fwd;
         _displacementMagnitude = _displacement.magnitude;
-        Dot = flameSO.Dot;
-        DotDurationSeconds = flameSO.DotLengthSeconds;
 
         _transform.localScale = Vector3.one;
         _transform.position = pos;

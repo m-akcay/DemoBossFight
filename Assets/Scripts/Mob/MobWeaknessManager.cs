@@ -1,33 +1,41 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.VFX;
 using AmmoType = Weapon.AmmoType;
 
 public class MobWeaknessManager : MonoBehaviour
 {
     private const float MIN_WEAKNESS = 0.2f;
     private const float MAX_WEAKNESS = 1.0f;
+
+    public event Action<float> OnWeaknessChanged;
+
     [SerializeField] private List<Damageable.Weakness> _weaknessMapDebug;
-    [SerializeField] [GradientUsage(true)] private Gradient _weaknessGradient;
-    private Material _mat;
 
     private void Start()
     {
         _weaknessMapDebug = new();
-        _mat = GetComponent<Renderer>().material;
-        _mat.SetColor("_BaseColor", _weaknessGradient.colorKeys[1].color);
-        _mat.SetColor("_EmissionColor", _weaknessGradient.colorKeys[1].color);
     }
 
     public void UpdateWeakness(in Damageable damageable, in AmmoType ammoType)
     {
         var mapping = damageable.WeaknessMap;
         UpdateMapping(mapping, ammoType);
-        UpdateMaterial(mapping[AmmoType.FLAME]);
+        float flameWeaknessRemapped = mapping[AmmoType.FLAME]
+            .Remap(MIN_WEAKNESS, MAX_WEAKNESS, 0.0f, 1.0f);
+        OnWeaknessChanged?.Invoke(flameWeaknessRemapped);
     }
 
     private void UpdateMapping(Dictionary<AmmoType, float> weaknessMap, in AmmoType ammoType)
     {
+        if (ammoType == AmmoType.BULLET)
+        {
+            return;
+        }
+
         _weaknessMapDebug.Clear();
 
         float currentWeakness = weaknessMap[ammoType];
@@ -65,13 +73,5 @@ public class MobWeaknessManager : MonoBehaviour
             _weaknessMapDebug.Add(weakness);
         }
 
-    }
-
-    private void UpdateMaterial(float flameWeakness)
-    {
-        float gradientTime = flameWeakness.Remap(MIN_WEAKNESS, MAX_WEAKNESS, 0.0f, 1.0f);
-        var currentColor = _weaknessGradient.Evaluate(gradientTime);
-        _mat.SetColor("_BaseColor", currentColor);
-        _mat.SetColor("_EmissionColor", currentColor);
     }
 }

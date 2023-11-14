@@ -20,6 +20,13 @@ public class BlueFlamethrower : Weapon
 
     public override void Shoot()
     {
+        base.Shoot();
+
+        if (!_shooting)
+        {
+            return;
+        }
+
         if (!_vfxPlaying)
         {
             _vfx.Play();
@@ -27,14 +34,12 @@ public class BlueFlamethrower : Weapon
             _vfxPlaying = true;
         }
 
-        if (_canShoot)
+        var flame = FlameHitboxPool.Instance.Get();
+        if (flame != null)
         {
-            StartCoroutine(ShootingICD(0.2f));
-            var flame = FlameHitboxPool.Instance.Get();
-            if (flame != null)
-            {
-                flame.Init(_weaponTransform, _flameData);
-            }
+            flame.Init(_weaponTransform, _flameData);
         }
+
+        _shooting = false;
     }
 }

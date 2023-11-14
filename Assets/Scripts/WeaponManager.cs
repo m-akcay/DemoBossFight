@@ -8,25 +8,36 @@ public class WeaponManager : MonoBehaviour
 {
     [SerializeField] private AmmoSO[] _ammoScriptableObjects;
 
+    [SerializeField]private Weapon[] _allWeapons;
     private Weapon _selectedWeapon;
     private Dictionary<AmmoType, Weapon> _weaponMapping;
 
+    public Weapon[] AllWeapons => _allWeapons;
+
     private void Start()
     {
+        _allWeapons = GetComponents<Weapon>();
+
         _weaponMapping = new();
-        var allWeapons = GetComponents<Weapon>();
         _selectedWeapon = GetComponent<RedFlamethrower>();
 
         var ammoList = _ammoScriptableObjects.ToList();
 
-        Debug.Log(allWeapons.Length);
+        Debug.Log(_allWeapons.Length);
 
         foreach (var ammo in _ammoScriptableObjects)
         {
-            Debug.Log(ammo.AmmoType);
-            var weapon = allWeapons.First(w => w.Ammo == ammo.AmmoType);
+            var weapon = _allWeapons.First(w => w.Ammo == ammo.AmmoType);
             _weaponMapping.TryAdd(ammo.AmmoType, weapon);
         }
+
+        GetComponent<WeaponVisualsManager>().Init(this);
+
+        // keep first weapon enabled
+        //for (int i = 1; i < _allWeapons.Length; i++)
+        //{
+        //    _allWeapons[i].enabled = false;
+        //}
     }
 
     public void SelectWeapon(AmmoType weaponType)
@@ -35,14 +46,14 @@ public class WeaponManager : MonoBehaviour
             return;
 
         _selectedWeapon.StopShooting();
-        _selectedWeapon.enabled = false;
+        //_selectedWeapon.enabled = false;
 
         if (_weaponMapping.TryGetValue(weaponType, out var weapon))
         {
             _selectedWeapon = weapon;
         }
 
-        _selectedWeapon.enabled = true;
+        //_selectedWeapon.enabled = true;
     }
 
     public void Shoot()
