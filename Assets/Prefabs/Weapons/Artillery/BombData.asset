@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6cefd55e5d5e24ab2571a8223572c1, type: 3}
+  m_Name: BombData
+  m_EditorClassIdentifier: 
+  _name: Bomb
+  _ammoType: 2
+  _prefab: {fileID: 4678017063891460652, guid: a27a952882563f84bb66967cea0c2f80, type: 3}
+  _capsuleColor: {r: 1.4142135, g: 1.1535546, b: 0.23292929, a: 1}
+  _speed: 50
+  _totalAmmo: 500
+  _ammoReductionAmount: 500
+  _shootingIcd: 5
+  _reloadIcd: 0.01
+  _maxDistance: 80
+  _onHitDamage: 100
+  _dot: 50
+  _dotDurationSeconds: 6
+  _defenseReduction: 0.15
+  _defenseReductionDuration: 6
+  _size: 5.19
+  _firingAngle: 15

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3faa5c1186e9b5f4990641cca97eea8d, type: 3}
+  m_Name: RedFlameSO
+  m_EditorClassIdentifier: 
+  _name: RedFlame
+  _ammoType: 0
+  _prefab: {fileID: 1923342226280422763, guid: 2da7feced64702443b1bf1b6ad92125e, type: 3}
+  _capsuleColor: {r: 1.4142135, g: 0.25511304, b: 0, a: 1}
+  _speed: 24
+  _totalAmmo: 200
+  _ammoReductionAmount: 1
+  _shootingIcd: 0.1
+  _reloadIcd: 0.1
+  _maxDistance: 40
+  _onHitDamage: 50
+  _dot: 50
+  _dotDurationSeconds: 5
+  _defenseReduction: 0
+  _defenseReductionDuration: 0
+  _vfxStartEventName: RedFlame
+  _vfxStopEventName: StopFlames
