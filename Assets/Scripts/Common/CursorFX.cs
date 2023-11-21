@@ -35,7 +35,7 @@ public class CursorFX : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         var cursorGo = GameObject.FindGameObjectWithTag("Cursor");
         _cursorTransform = cursorGo.transform;
